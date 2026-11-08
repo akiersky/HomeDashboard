@@ -1,0 +1,741 @@
+{
+  "schemaVersion": 1,
+  "familyName": "Our Family",
+  "theme": "light",
+  "themeMode": "auto",
+  "activeMemberId": "all",
+  "members": [
+    {
+      "id": "mom",
+      "name": "Mom",
+      "fullName": "Mom",
+      "role": "parent",
+      "avatar": "👩",
+      "color": "#f43f5e",
+      "stars": 45,
+      "targetReward": "Spa Day",
+      "targetStars": 100
+    },
+    {
+      "id": "dad",
+      "name": "Dad",
+      "fullName": "Dad",
+      "role": "parent",
+      "avatar": "👨",
+      "color": "#0284c7",
+      "stars": 40,
+      "targetReward": "Weekend Getaway",
+      "targetStars": 100
+    },
+    {
+      "id": "alex",
+      "name": "Alex",
+      "fullName": "Alex",
+      "role": "kid",
+      "avatar": "👦",
+      "color": "#f59e0b",
+      "stars": 32,
+      "targetReward": "Lego Set",
+      "targetStars": 50
+    },
+    {
+      "id": "sam",
+      "name": "Sam",
+      "fullName": "Sam",
+      "role": "kid",
+      "avatar": "👧",
+      "color": "#8b5cf6",
+      "stars": 28,
+      "targetReward": "Ice Cream Outing 🍦",
+      "targetStars": 40
+    }
+  ],
+  "chores": [
+    {
+      "id": "ch-1",
+      "title": "Clean Up Bedroom",
+      "memberId": "alex",
+      "points": 3,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "daily"
+    },
+    {
+      "id": "ch-2",
+      "title": "Clear Dinner Table",
+      "memberId": "alex",
+      "points": 2,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "daily"
+    },
+    {
+      "id": "ch-w1",
+      "title": "Strip Bed & Wash Sheets",
+      "memberId": "alex",
+      "points": 5,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    },
+    {
+      "id": "ch-w2",
+      "title": "Take Out Recycling Bins",
+      "memberId": "alex",
+      "points": 4,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    },
+    {
+      "id": "ch-m1",
+      "title": "Deep Clean Toy Bins & Closet",
+      "memberId": "alex",
+      "points": 10,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "monthly"
+    },
+    {
+      "id": "ch-3",
+      "title": "Feed the Dog",
+      "memberId": "sam",
+      "points": 2,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "daily"
+    },
+    {
+      "id": "ch-4",
+      "title": "Put Away Shoes",
+      "memberId": "sam",
+      "points": 2,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "daily"
+    },
+    {
+      "id": "ch-w3",
+      "title": "Wipe Down Play Table",
+      "memberId": "sam",
+      "points": 4,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    },
+    {
+      "id": "ch-w4",
+      "title": "Sort & Organize Bookshelf",
+      "memberId": "sam",
+      "points": 4,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    },
+    {
+      "id": "ch-m2",
+      "title": "Wash & Organize Stuffed Animals",
+      "memberId": "sam",
+      "points": 8,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "monthly"
+    },
+    {
+      "id": "wc-1",
+      "title": "Vacuum Living Room 🧹",
+      "memberId": "either",
+      "points": 8,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    },
+    {
+      "id": "wc-2",
+      "title": "Wipe Bathroom Sink 🚿",
+      "memberId": "either",
+      "points": 6,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    },
+    {
+      "id": "wc-3",
+      "title": "Help Fold Laundry 🧺",
+      "memberId": "either",
+      "points": 5,
+      "status": "pending",
+      "routineType": "general",
+      "frequency": "weekly"
+    }
+  ],
+  "routines": [
+    {
+      "id": "rt-1",
+      "title": "Make Bed",
+      "routineType": "morning",
+      "memberId": "alex",
+      "completedToday": true
+    },
+    {
+      "id": "rt-2",
+      "title": "Brush Teeth",
+      "routineType": "morning",
+      "memberId": "alex",
+      "completedToday": true
+    },
+    {
+      "id": "rt-3",
+      "title": "Eat Breakfast",
+      "routineType": "morning",
+      "memberId": "sam",
+      "completedToday": true
+    },
+    {
+      "id": "rt-4",
+      "title": "Brush Teeth",
+      "routineType": "morning",
+      "memberId": "sam",
+      "completedToday": false
+    },
+    {
+      "id": "rt-5",
+      "title": "Unpack Backpack",
+      "routineType": "afterschool",
+      "memberId": "alex",
+      "completedToday": false
+    },
+    {
+      "id": "rt-6",
+      "title": "Finish Homework",
+      "routineType": "afterschool",
+      "memberId": "alex",
+      "completedToday": false
+    },
+    {
+      "id": "rt-7",
+      "title": "Hang up Coat",
+      "routineType": "afterschool",
+      "memberId": "sam",
+      "completedToday": false
+    },
+    {
+      "id": "rt-8",
+      "title": "Put on Pajamas",
+      "routineType": "bedtime",
+      "memberId": "sam",
+      "completedToday": false
+    },
+    {
+      "id": "rt-9",
+      "title": "Read 15 Mins",
+      "routineType": "bedtime",
+      "memberId": "alex",
+      "completedToday": false
+    }
+  ],
+  "parentTasks": [
+    {
+      "id": "pt-1",
+      "memberId": "mom",
+      "title": "Schedule annual checkups",
+      "priority": "high",
+      "category": "health",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "pt-2",
+      "memberId": "mom",
+      "title": "Order school and craft supplies",
+      "priority": "medium",
+      "category": "errands",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "pt-3",
+      "memberId": "mom",
+      "title": "Review family budget and savings",
+      "priority": "low",
+      "category": "finance",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "pt-4",
+      "memberId": "dad",
+      "title": "Check weather stripping on exterior doors",
+      "priority": "high",
+      "category": "home",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "pt-5",
+      "memberId": "dad",
+      "title": "Replace HVAC air filters",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "pt-6",
+      "memberId": "dad",
+      "title": "Tune up lawnmower & garden tools",
+      "priority": "low",
+      "category": "home",
+      "dueDate": "",
+      "completed": true
+    },
+    {
+      "id": "pt-7",
+      "memberId": "shared",
+      "title": "Plan weekend barbecue with neighbors",
+      "priority": "medium",
+      "category": "family",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "rr-1",
+      "memberId": "dad",
+      "title": "Change heater & HVAC air filter",
+      "notes": "Replace furnace filter in main return intake",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "monthly",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-2",
+      "memberId": "shared",
+      "title": "Take out trash & recycling bins",
+      "notes": "Roll bins to curb by evening",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "weekly",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-3",
+      "memberId": "mom",
+      "title": "Weekly family meal planning & grocery order",
+      "notes": "Plan meals for the week & sync to shopping list",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "weekly",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-4",
+      "memberId": "dad",
+      "title": "Mow lawn & tidy walkways",
+      "notes": "Mow grass and sweep patio",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "weekly",
+      "lastCompletedDate": null,
+      "showOnCalendar": false,
+      "completed": false
+    },
+    {
+      "id": "rr-5",
+      "memberId": "mom",
+      "title": "Review utility bills & budget",
+      "notes": "Verify monthly statements and accounts",
+      "priority": "medium",
+      "category": "finance",
+      "dueDate": "",
+      "frequency": "monthly",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-6",
+      "memberId": "shared",
+      "title": "Deep clean dishwasher & appliances",
+      "notes": "Run dishwasher cleaning cycle and clean lint filters",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "monthly",
+      "lastCompletedDate": null,
+      "showOnCalendar": false,
+      "completed": false
+    },
+    {
+      "id": "rr-7",
+      "memberId": "dad",
+      "title": "Check tire pressures & top off wiper fluid",
+      "notes": "Verify tire pressures and fluid levels",
+      "priority": "medium",
+      "category": "vehicle",
+      "dueDate": "",
+      "frequency": "monthly",
+      "lastCompletedDate": null,
+      "showOnCalendar": false,
+      "completed": false
+    },
+    {
+      "id": "rr-8",
+      "memberId": "shared",
+      "title": "Replace smoke & CO detector batteries",
+      "notes": "Test smoke detectors and replace batteries",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "annually",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-9",
+      "memberId": "dad",
+      "title": "Annual furnace & heating system inspection",
+      "notes": "Schedule routine HVAC maintenance",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "annually",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-10",
+      "memberId": "mom",
+      "title": "Renew vehicle registration & inspection",
+      "notes": "Renew annual car registration online",
+      "priority": "medium",
+      "category": "vehicle",
+      "dueDate": "",
+      "frequency": "annually",
+      "lastCompletedDate": null,
+      "showOnCalendar": true,
+      "completed": false
+    },
+    {
+      "id": "rr-11",
+      "memberId": "mom",
+      "title": "Morning priorities & schedule review",
+      "notes": "Check daily appointments and dinner plan",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "daily",
+      "lastCompletedDate": null,
+      "showOnCalendar": false,
+      "completed": false
+    },
+    {
+      "id": "rr-12",
+      "memberId": "dad",
+      "title": "Evening perimeter check & door locks",
+      "notes": "Ensure doors and garage are securely closed",
+      "priority": "medium",
+      "category": "home",
+      "dueDate": "",
+      "frequency": "daily",
+      "lastCompletedDate": null,
+      "showOnCalendar": false,
+      "completed": false
+    }
+  ],
+  "kidAchievements": {
+    "alex": {
+      "rank": "Level 4 Star Adventurer",
+      "streak": 5,
+      "badges": [
+        {
+          "id": "star_10",
+          "icon": "🌟",
+          "title": "Star Pioneer",
+          "desc": "Earned 10+ stars",
+          "unlocked": true
+        },
+        {
+          "id": "star_25",
+          "icon": "⭐",
+          "title": "Star Achiever",
+          "desc": "Earned 25+ stars",
+          "unlocked": true
+        },
+        {
+          "id": "streak_5",
+          "icon": "🔥",
+          "title": "Streak Master",
+          "desc": "5-day routine streak",
+          "unlocked": true
+        },
+        {
+          "id": "bed_master",
+          "icon": "🛏️",
+          "title": "Bed Maker Pro",
+          "desc": "Consistent morning routine",
+          "unlocked": true
+        },
+        {
+          "id": "bookworm",
+          "icon": "📚",
+          "title": "Bookworm Legend",
+          "desc": "Bedtime reading every night",
+          "unlocked": true
+        },
+        {
+          "id": "wildcard_hero",
+          "icon": "🧹",
+          "title": "Wildcard Hero",
+          "desc": "Completed bonus wildcard chore",
+          "unlocked": true
+        },
+        {
+          "id": "room_tidy",
+          "icon": "🧸",
+          "title": "Tidy Bedroom King",
+          "desc": "Clean bedroom 5 days",
+          "unlocked": false,
+          "progress": "3 / 5"
+        },
+        {
+          "id": "goal_crusher",
+          "icon": "🎯",
+          "title": "Master Builder",
+          "desc": "Reach Lego building set",
+          "unlocked": false,
+          "progress": "32 / 50 ⭐"
+        }
+      ],
+      "activityLog": [
+        {
+          "id": "act-1",
+          "title": "Make Bed",
+          "points": 1,
+          "time": "8:15 AM Today"
+        },
+        {
+          "id": "act-2",
+          "title": "Brush Teeth",
+          "points": 1,
+          "time": "8:25 AM Today"
+        },
+        {
+          "id": "act-3",
+          "title": "Clean Up Bedroom",
+          "points": 3,
+          "time": "Yesterday"
+        },
+        {
+          "id": "act-4",
+          "title": "Vacuum Living Room 🧹 (Wildcard Bonus)",
+          "points": 8,
+          "time": "2 days ago"
+        }
+      ]
+    },
+    "sam": {
+      "rank": "Level 3 Star Explorer",
+      "streak": 3,
+      "badges": [
+        {
+          "id": "star_10",
+          "icon": "🌟",
+          "title": "Star Pioneer",
+          "desc": "Earned 10+ stars",
+          "unlocked": true
+        },
+        {
+          "id": "star_25",
+          "icon": "⭐",
+          "title": "Star Achiever",
+          "desc": "Earned 25+ stars",
+          "unlocked": true
+        },
+        {
+          "id": "streak_3",
+          "icon": "🔥",
+          "title": "On Fire!",
+          "desc": "3-day completion streak",
+          "unlocked": true
+        },
+        {
+          "id": "buddy_friend",
+          "icon": "🐶",
+          "title": "Animal Friend",
+          "desc": "Feed the family dog",
+          "unlocked": true
+        },
+        {
+          "id": "breakfast_star",
+          "icon": "🥞",
+          "title": "Breakfast Champ",
+          "desc": "Eat breakfast on time",
+          "unlocked": true
+        },
+        {
+          "id": "tidy_shoes",
+          "icon": "👟",
+          "title": "Shoe Organizer",
+          "desc": "Put shoes away neatly",
+          "unlocked": false,
+          "progress": "3 / 5"
+        },
+        {
+          "id": "wildcard_champ",
+          "icon": "⚡",
+          "title": "Wildcard Explorer",
+          "desc": "Claim a bonus wildcard chore",
+          "unlocked": false,
+          "progress": "0 / 1"
+        },
+        {
+          "id": "ice_cream_goal",
+          "icon": "🍦",
+          "title": "Park & Ice Cream Outing",
+          "desc": "Reach target stars",
+          "unlocked": false,
+          "progress": "28 / 40 ⭐"
+        }
+      ],
+      "activityLog": [
+        {
+          "id": "act-5",
+          "title": "Eat Breakfast",
+          "points": 1,
+          "time": "8:20 AM Today"
+        },
+        {
+          "id": "act-6",
+          "title": "Feed the Dog",
+          "points": 2,
+          "time": "Yesterday"
+        },
+        {
+          "id": "act-7",
+          "title": "Put on Pajamas",
+          "points": 1,
+          "time": "Yesterday"
+        },
+        {
+          "id": "act-8",
+          "title": "Help Fold Laundry 🧺 (Wildcard)",
+          "points": 5,
+          "time": "3 days ago"
+        }
+      ]
+    }
+  },
+  "meals": {
+    "Mon": "Grilled Chicken & Roasted Veggies 🍗",
+    "Tue": "Taco Tuesday & Guacamole 🌮",
+    "Wed": "Homemade Spaghetti & Meatballs 🍝",
+    "Thu": "Baked Salmon & Rice Bowl 🍣",
+    "Fri": "Family Pizza Night & Salad 🍕",
+    "Sat": "BBQ Burgers & Corn on the Cob 🍔",
+    "Sun": "Slow Cooker Roast & Potatoes 🍲"
+  },
+  "groceries": [
+    {
+      "id": "g-1",
+      "name": "Organic Whole Milk",
+      "bought": false
+    },
+    {
+      "id": "g-2",
+      "name": "Honeycrisp Apples 🍎",
+      "bought": true
+    },
+    {
+      "id": "g-3",
+      "name": "Taco Shells & Cheese",
+      "bought": false
+    },
+    {
+      "id": "g-4",
+      "name": "Sourdough Bread",
+      "bought": false
+    }
+  ],
+  "mealIdeas": [
+    {
+      "id": "idea-1",
+      "name": "Grilled Chicken & Roasted Veggies 🍗"
+    },
+    {
+      "id": "idea-2",
+      "name": "Taco Tuesday & Guacamole 🌮"
+    },
+    {
+      "id": "idea-3",
+      "name": "Homemade Spaghetti & Meatballs 🍝"
+    },
+    {
+      "id": "idea-4",
+      "name": "Baked Salmon & Rice Bowl 🍣"
+    },
+    {
+      "id": "idea-5",
+      "name": "Family Pizza Night & Salad 🍕"
+    },
+    {
+      "id": "idea-6",
+      "name": "BBQ Burgers & Corn on the Cob 🍔"
+    },
+    {
+      "id": "idea-7",
+      "name": "Slow Cooker Pot Roast & Potatoes 🍲"
+    },
+    {
+      "id": "idea-8",
+      "name": "Chicken Fajitas & Peppers 🌯"
+    },
+    {
+      "id": "idea-9",
+      "name": "Creamy Tuscan Garlic Chicken 🍗"
+    },
+    {
+      "id": "idea-10",
+      "name": "Mac & Cheese with Steamed Broccoli 🧀"
+    },
+    {
+      "id": "idea-11",
+      "name": "Stir-Fry Noodles with Tofu & Veggies 🥢"
+    },
+    {
+      "id": "idea-12",
+      "name": "Turkey Chili & Cheddar Cornbread 🌶️"
+    }
+  ],
+  "settings": {
+    "haUrl": "http://homeassistant.local:8123",
+    "haToken": "",
+    "haConnected": true,
+    "googleKeepUrl": "https://keep.google.com",
+    "haGroceryTodoEntity": "",
+    "haMealIdeasEntity": "todo.meal_ideas",
+    "haMealPlanEntity": "todo.weekly_meal_plan",
+    "immichUrl": "http://homeassistant.local:2283",
+    "immichApiKey": "",
+    "immichEnabled": false,
+    "idleSaverMinutes": 2,
+    "photoIntervalSeconds": 30,
+    "weather": {
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "locationName": "Home"
+    }
+  }
+}

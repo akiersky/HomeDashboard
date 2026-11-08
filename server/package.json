@@ -1,0 +1,11 @@
+{
+  "name": "family-dashboard-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone backend for Family Dashboard: speaks the slice of Home Assistant's API the client uses, so it runs without Home Assistant.",
+  "license": "MIT",
+  "main": "index.js",
+  "engines": { "node": ">=22" },
+  "scripts": { "start": "node index.js" },
+  "dependencies": { "ical.js": "2.2.1" }
+}

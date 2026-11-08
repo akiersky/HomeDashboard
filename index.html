@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Family Kitchen Dashboard</title>
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css?v=109" />
+</head>
+<body>
+  <div id="dashboard-root" class="dashboard-container">
+    
+    <!-- TOP KITCHEN HEADER BAR -->
+    <header class="header-bar glass-panel">
+      <!-- Left: Clock & date -->
+      <div class="header-time-section">
+        <div class="clock-display" id="clock">12:00 <span class="ampm">PM</span></div>
+        <div class="date-greeting-group">
+          <div class="date-display" id="current-date">Tuesday, September 8, 2026</div>
+        </div>
+      </div>
+
+      <!-- Center: Weather Widget -->
+      <button type="button" class="weather-widget glass-card clickable" id="weather-card" title="Click for 5-day forecast &amp; weather details" aria-label="Weather forecast">
+        <div class="weather-icon-temp">
+          <i class="fa-solid fa-sun weather-icon" id="weather-icon"></i>
+          <span class="weather-temp" id="weather-temp">74°F</span>
+        </div>
+        <div class="weather-details">
+          <span class="weather-desc" id="weather-desc">Sunny &amp; Pleasant</span>
+          <div class="weather-sub-metrics">
+            <span class="weather-hi-lo" id="weather-hilo">H: 78° • L: 58°</span>
+            <span class="weather-header-stat" id="header-rain-stat" title="Precipitation probability"><i class="fa-solid fa-droplet text-sky"></i> <span id="header-rain-val">0%</span></span>
+            <span class="weather-header-stat" id="header-aqi-stat" title="Air Quality Index"><i class="fa-solid fa-leaf text-success"></i> AQI <span id="header-aqi-val">32</span></span>
+          </div>
+        </div>
+      </button>
+
+      <!-- Right: Navigation & Settings -->
+      <div class="header-actions">
+        <nav class="header-nav" aria-label="Main Navigation">
+          <button class="nav-btn active" data-view="calendar" title="Calendar">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Calendar</span>
+          </button>
+          <button class="nav-btn" data-view="chores" title="Todos & Chores">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Chores</span>
+          </button>
+          <button class="nav-btn" data-view="meals" title="Meals & Grocery">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Meals</span>
+          </button>
+        </nav>
+
+        <div class="header-tools">
+          <button class="icon-tool-btn" id="doorbell-btn" aria-label="View doorbell camera" title="View Doorbell Camera" hidden>
+            <i class="fa-solid fa-video"></i>
+          </button>
+          <button class="icon-tool-btn" id="photo-frame-btn" aria-label="Start photo frame" title="Start Photo Frame Saver">
+            <i class="fa-solid fa-image"></i>
+          </button>
+          <button class="icon-tool-btn" id="settings-btn" aria-label="Dashboard settings" title="Dashboard Settings">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <main class="dashboard-main">
+      
+      <!-- ================= VIEW 1: CALENDAR VIEW ================= -->
+      <section id="view-calendar" class="view-panel active">
+        <div class="calendar-controls">
+          <div class="cal-left-controls">
+            <button class="btn-secondary" id="cal-today-btn"><i class="fa-solid fa-calendar-day"></i> Today</button>
+            <div class="cal-nav-buttons">
+              <button class="icon-btn" id="cal-prev-btn" aria-label="Previous period"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="icon-btn" id="cal-next-btn" aria-label="Next period"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <h2 class="cal-title" id="cal-current-label">September 2026</h2>
+            <div class="cal-picker" id="cal-member-picker"></div>
+          </div>
+
+          <div class="cal-center-legend" id="cal-member-legend">
+            <!-- Member Color Pills Legend -->
+          </div>
+
+          <div class="cal-right-controls">
+            <div class="cal-picker" id="cal-view-picker">
+              <button type="button" class="btn-secondary picker-current" id="cal-view-current" aria-haspopup="true" aria-expanded="false">
+                <span id="cal-view-current-label">Week</span>
+                <i class="fa-solid fa-chevron-down picker-caret" aria-hidden="true"></i>
+              </button>
+              <div class="picker-menu" role="menu">
+                <button class="switch-btn active" data-cal-view="week">Week</button>
+                <button class="switch-btn" data-cal-view="3day">3-Day</button>
+                <button class="switch-btn" data-cal-view="month">Month</button>
+                <button class="switch-btn" data-cal-view="agenda">Agenda</button>
+              </div>
+            </div>
+            <button class="btn-primary" id="add-event-btn" aria-label="Add event" title="Add Event">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="calendar-content-wrapper glass-panel">
+          <!-- Week View (Hourly Timeline) -->
+          <div id="cal-view-week" class="cal-timeline-view active">
+            <div class="timeline-header-wrapper">
+              <div class="time-scale-header"><i class="fa-regular fa-clock"></i></div>
+              <div class="timeline-days-header" id="week-header-row"></div>
+            </div>
+            <div class="timeline-allday-wrapper" id="week-allday-wrapper">
+              <div class="allday-label">All Day</div>
+              <div class="allday-days-row" id="week-allday-row"></div>
+            </div>
+            <div class="timeline-scroll-container" id="week-scroll-container">
+              <div class="time-scale-col" id="week-time-scale"></div>
+              <div class="timeline-days-grid" id="week-days-container"></div>
+            </div>
+          </div>
+
+          <!-- 3-Day View (Hourly Timeline) -->
+          <div id="cal-view-3day" class="cal-timeline-view cal-3day-view">
+            <div class="timeline-header-wrapper">
+              <div class="time-scale-header"><i class="fa-regular fa-clock"></i></div>
+              <div class="timeline-days-header" id="threeday-header-row"></div>
+            </div>
+            <div class="timeline-allday-wrapper" id="threeday-allday-wrapper">
+              <div class="allday-label">All Day</div>
+              <div class="allday-days-row" id="threeday-allday-row"></div>
+            </div>
+            <div class="timeline-scroll-container" id="threeday-scroll-container">
+              <div class="time-scale-col" id="threeday-time-scale"></div>
+              <div class="timeline-days-grid" id="threeday-days-container"></div>
+            </div>
+          </div>
+
+          <!-- Month Grid View -->
+          <div id="cal-view-month" class="cal-grid-view">
+            <div class="weekday-header-row">
+              <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+            </div>
+            <div class="days-grid" id="month-days-container"></div>
+          </div>
+
+          <!-- Agenda View (Multi-Column Family Grid) -->
+          <div id="cal-view-agenda" class="cal-agenda-view">
+            <div class="agenda-members-grid" id="agenda-members-container"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 2: TODOS & CHORES VIEW ================= -->
+      <section id="view-chores" class="view-panel" aria-label="Chores">
+        <div class="chores-header-bar">
+          <div class="family-filter-container" id="family-filter-bar">
+            <!-- Injected via JavaScript (Kids + family members from config.js) -->
+          </div>
+          <div class="chores-actions" id="todos-header-actions">
+            <button class="btn-secondary" id="todos-add-item-btn">
+              <i class="fa-solid fa-plus" aria-hidden="true"></i> <span id="todos-add-item-text">Add chore</span>
+            </button>
+            <button class="btn-secondary" data-toggle-edit><i class="fa-solid fa-pen" aria-hidden="true"></i> Edit</button>
+            <button class="btn-secondary" id="admin-lock-btn">
+              <i class="fa-solid fa-sliders" aria-hidden="true"></i> Manage
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. KIDS MAIN DASHBOARD CONTAINER (one chart per kid, injected via JS, then WILDCARDS) -->
+        <div class="chores-kids-grid" id="todos-kids-main-container">
+          <!-- Last column: Wildcard Chores on Far Right (Adult Managed) -->
+          <div class="wildcard-column-panel glass-panel" id="wildcard-chores-section">
+            <div class="wildcard-column-header">
+              <div class="wildcard-title-group">
+                <h3><i class="fa-solid fa-bolt" aria-hidden="true"></i> Wildcards</h3>
+                <span class="wildcard-subtitle">Bonus chores any kid can claim</span>
+              </div>
+              <button class="btn-secondary btn-sm" id="btn-add-wildcard-header">
+                <i class="fa-solid fa-plus" aria-hidden="true"></i> Add
+              </button>
+            </div>
+            <div class="wildcard-chores-scroll" id="wildcard-chores-container">
+              <!-- Injected via JS -->
+            </div>
+            <button type="button" class="btn-primary store-btn" data-open-store><i class="fa-solid fa-gift" aria-hidden="true"></i> Prize store</button>
+          </div>
+        </div>
+
+        <!-- 2. DEDICATED KID ACHIEVEMENTS & MISSIONS CONTAINER (any kid) -->
+        <div class="kid-page-container" id="todos-kid-page-container" style="display: none;">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- 3. PARENT TACTICAL TASKS & CALENDAR REMINDERS CONTAINER (Mom or Dad) -->
+        <div class="parent-page-container" id="todos-parent-page-container" style="display: none;">
+          <!-- Injected via JS -->
+        </div>
+      </section>
+
+      <!-- ================= VIEW 3: MEAL PLANNER VIEW ================= -->
+      <section id="view-meals" class="view-panel">
+
+        <div class="meals-layout">
+
+          <!-- Left: Shopping List -->
+          <div class="meals-shopping-col glass-panel">
+            <div class="grocery-header">
+              <h3><i class="fa-solid fa-basket-shopping text-amber"></i> Shopping List</h3>
+              <div class="keep-actions">
+                <span class="grocery-count" id="grocery-count">0 items</span>
+                <a href="https://keep.google.com" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:4px 10px;text-decoration:none;" id="open-keep-btn">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Keep
+                </a>
+              </div>
+            </div>
+            <div class="keep-sync-banner">
+              <i class="fa-solid fa-rotate" aria-hidden="true"></i> <span id="keep-sync-status" role="status">Connecting…</span>
+            </div>
+            <div class="grocery-add-box">
+              <input type="text" id="grocery-input" placeholder="Add item..." aria-label="Add grocery item" />
+              <button class="btn-secondary" id="grocery-add-btn" aria-label="Add item to shopping list"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <ul class="grocery-list" id="grocery-list-container">
+              <!-- Injected by JS -->
+            </ul>
+          </div>
+
+          <!-- Right: Week Meal Planner -->
+          <div class="meals-week-col glass-panel">
+            <h3><i class="fa-solid fa-calendar-week text-sky"></i> Next 7 Days</h3>
+            <div class="meal-week-list" id="meal-week-grid">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Meal Picker Modal -->
+        <div class="modal-overlay" id="meal-picker-overlay">
+          <div class="modal-card glass-panel meal-picker-card">
+            <div class="modal-header">
+              <h3 id="meal-picker-title"><i class="fa-solid fa-utensils text-sky"></i> Choose a meal</h3>
+              <button class="modal-close-btn" id="meal-picker-close" aria-label="Close dialog">&times;</button>
+            </div>
+            <div class="modal-body meal-picker-body">
+              <div class="form-group">
+                <label for="meal-picker-input">Search ideas, or type a new meal</label>
+                <div class="meal-picker-add">
+                  <input type="text" id="meal-picker-input" placeholder="e.g. Tacos" autocomplete="off" />
+                  <button type="button" class="btn-primary" id="meal-picker-add-btn"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add</button>
+                </div>
+              </div>
+              <ul class="meal-picker-list" id="meal-picker-list">
+                <!-- Injected by JS -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ================= MODALS & OVERLAYS ================= -->
+    
+    <!-- 1. ADD / EDIT EVENT MODAL -->
+    <div class="modal-overlay" id="event-modal">
+      <div class="modal-card glass-panel">
+        <div class="modal-header">
+          <h3 id="event-modal-title"><i class="fa-solid fa-calendar-plus"></i> Add Family Event</h3>
+          <button class="modal-close-btn" id="event-modal-close" aria-label="Close dialog">&times;</button>
+        </div>
+        <form id="event-form" class="modal-body">
+          <input type="hidden" id="event-id" />
+          <div class="form-group">
+            <label for="event-title-input">Event Title</label>
+            <input type="text" id="event-title-input" placeholder="e.g. Soccer Practice, Dentist Visit" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="event-member-select">Assign To</label>
+              <select id="event-member-select" required>
+                <!-- Injected via JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="event-category-select">Category</label>
+              <select id="event-category-select">
+                <option value="sports">Sports / Activities</option>
+                <option value="school">School / Work</option>
+                <option value="medical">Medical / Health</option>
+                <option value="fun">Fun / Party</option>
+                <option value="family">Family / General</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="event-date-input">Date</label>
+              <input type="date" id="event-date-input" required />
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" id="event-allday-check" />
+              <label for="event-allday-check">All day</label>
+            </div>
+          </div>
+
+          <div class="form-row" id="event-time-row">
+            <div class="form-group">
+              <label for="event-time-input">Starts</label>
+              <input type="time" id="event-time-input" value="09:00" />
+            </div>
+            <div class="form-group">
+              <label for="event-end-input">Ends (optional)</label>
+              <input type="time" id="event-end-input" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="event-location-input">Location / Notes (Optional)</label>
+            <input type="text" id="event-location-input" placeholder="e.g. Central Park Field 3" />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-danger hidden" id="event-delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+            <div class="footer-right">
+              <button type="button" class="btn-secondary" id="event-modal-cancel">Cancel</button>
+              <button type="submit" class="btn-primary">Save Event</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2. ADD CHORE MODAL -->
+    <div class="modal-overlay" id="chore-modal">
+      <div class="modal-card glass-panel">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-star-half-stroke text-amber"></i> <span id="chore-modal-title">Add Chore</span></h3>
+          <button class="modal-close-btn" id="chore-modal-close" aria-label="Close dialog">&times;</button>
+        </div>
+        <form id="chore-form" class="modal-body">
+          <div class="form-group">
+            <label for="chore-title-input">Chore Name</label>
+            <input type="text" id="chore-title-input" placeholder="e.g. Clean Bedroom, Feed Dog, Clear Table" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="chore-member-select">Assign To</label>
+              <select id="chore-member-select" required>
+                <!-- Injected via JS: kids only (wildcards managed by parents) -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="chore-points-select">Stars</label>
+              <select id="chore-points-select">
+                <option value="1">1 star</option>
+                <option value="2">2 stars</option>
+                <option value="3" selected>3 stars</option>
+                <option value="5">5 stars</option>
+                <option value="8">8 stars (big)</option>
+                <option value="10">10 stars (bonus)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="chore-frequency-group">
+              <label for="chore-frequency-select">Frequency / Cadence</label>
+              <select id="chore-frequency-select">
+                <option value="daily" selected>Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <div class="form-group" id="chore-type-group">
+              <label for="chore-routine-select">Routine / Time of Day</label>
+              <select id="chore-routine-select">
+                <option value="general" selected>Daily chore</option>
+                <option value="morning">Morning routine</option>
+                <option value="afterschool">After school routine</option>
+                <option value="bedtime">Bedtime routine</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-danger-sm" id="chore-modal-delete" hidden style="margin-right:auto;"><i class="fa-solid fa-trash" aria-hidden="true"></i> Delete</button>
+            <button type="button" class="btn-secondary" id="chore-modal-cancel">Cancel</button>
+            <button type="submit" class="btn-primary" id="chore-modal-submit">Add Chore</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2c. ADD PARENT TACTICAL TASK MODAL -->
+    <div class="modal-overlay" id="parent-task-modal">
+      <div class="modal-card glass-panel">
+        <div class="modal-header">
+          <h3 id="parent-task-modal-title"><i class="fa-solid fa-list-check" aria-hidden="true"></i> <span>Add task</span></h3>
+          <button class="modal-close-btn" id="parent-task-modal-close" aria-label="Close dialog">&times;</button>
+        </div>
+        <form id="parent-task-form" class="modal-body">
+          <input type="hidden" id="parent-task-id" />
+          <div class="form-group">
+            <label for="parent-task-title-input">Task</label>
+            <input type="text" id="parent-task-title-input" placeholder="e.g. Change HVAC filter, Call plumber" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="parent-task-member-select">Assign To</label>
+              <select id="parent-task-member-select" required>
+                <!-- Injected via JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="parent-task-priority-select">Priority</label>
+              <select id="parent-task-priority-select">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="parent-task-date-input">Due</label>
+              <input type="date" id="parent-task-date-input" />
+            </div>
+            <div class="form-group">
+              <label for="parent-task-category-select">Category</label>
+              <select id="parent-task-category-select">
+                <option value="general" selected>General</option>
+                <option value="home">Home</option>
+                <option value="vehicle">Vehicle</option>
+                <option value="finance">Finance</option>
+                <option value="errands">Errands</option>
+                <option value="work">Work</option>
+                <option value="health">Health</option>
+                <option value="family">Family</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="parent-task-frequency-select">Repeats</label>
+              <select id="parent-task-frequency-select">
+                <option value="none" selected>Doesn't repeat</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="annually">Yearly</option>
+              </select>
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" id="parent-task-calendar-check" />
+              <label for="parent-task-calendar-check">Show on family calendar</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="parent-task-notes-input">Notes (optional)</label>
+            <input type="text" id="parent-task-notes-input" placeholder="e.g. 20x25x1 MERV 11 filter in basement" />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="parent-task-modal-cancel">Cancel</button>
+            <button type="submit" class="btn-primary" id="parent-task-submit">Add task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 3. WEATHER FORECAST MODAL -->
+    <div class="modal-overlay" id="weather-modal" role="dialog" aria-modal="true" aria-labelledby="weather-modal-title">
+      <div class="modal-card glass-panel weather-modal-card">
+        <div class="modal-header">
+          <h3 id="weather-modal-title"><i class="fa-solid fa-cloud-sun text-amber"></i> Weather Forecast</h3>
+          <div class="weather-modal-actions">
+            <button type="button" class="btn-icon" id="weather-refresh-btn" title="Refresh weather data" aria-label="Refresh weather data">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+            <button type="button" class="radar-open-btn" id="open-windy-radar-btn" title="Open Windy.com Live Radar" aria-label="Open Windy live radar">
+              <i class="fa-solid fa-satellite-dish"></i> Live Radar
+            </button>
+            <button class="modal-close-btn" id="weather-modal-close" aria-label="Close dialog">&times;</button>
+          </div>
+        </div>
+        <div class="modal-body weather-modal-body">
+          <!-- Current Weather Hero with Extended Details -->
+          <div class="current-weather-hero" id="current-weather-hero">
+            <div class="hero-primary-row">
+              <div class="hero-main-temp">
+                <i class="fa-solid fa-sun hero-icon text-amber" id="hero-weather-icon"></i>
+                <div>
+                  <div class="hero-temp" id="hero-weather-temp">74°F</div>
+                  <div class="hero-condition" id="hero-weather-desc">Sunny &amp; Clear</div>
+                </div>
+              </div>
+              <div class="hero-location-wrap">
+                <button type="button" class="hero-location" id="hero-weather-location" title="Change weather location" aria-label="Change weather location"><i class="fa-solid fa-location-dot text-rose"></i> Home</button>
+                <div class="location-picker" id="weather-location-picker" hidden>
+                  <input type="search" id="weather-location-search" placeholder="Search city or ZIP…" autocomplete="off" aria-label="Search for a city" />
+                  <ul id="weather-location-results" class="location-results"></ul>
+                </div>
+                <span class="hero-hilo" id="hero-weather-hilo">H: 78° • L: 58°</span>
+                <span class="hero-feelslike" id="hero-weather-feels">Feels like 75°F</span>
+              </div>
+            </div>
+
+            <!-- Extended Detail Metrics Grid -->
+            <div class="weather-metrics-grid" id="weather-metrics-grid">
+              <div class="metric-pill" title="Precipitation Probability">
+                <i class="fa-solid fa-cloud-rain text-sky"></i>
+                <div class="metric-info">
+                  <span class="metric-label">Rain Chance</span>
+                  <span class="metric-value" id="metric-rain">0%</span>
+                </div>
+              </div>
+              <div class="metric-pill" title="Wind Speed & Direction">
+                <i class="fa-solid fa-wind text-sky"></i>
+                <div class="metric-info">
+                  <span class="metric-label">Wind</span>
+                  <span class="metric-value" id="metric-wind">6 mph NW</span>
+                </div>
+              </div>
+              <div class="metric-pill" title="Relative Humidity">
+                <i class="fa-solid fa-droplet text-sky"></i>
+                <div class="metric-info">
+                  <span class="metric-label">Humidity</span>
+                  <span class="metric-value" id="metric-humidity">45%</span>
+                </div>
+              </div>
+              <div class="metric-pill aqi-pill" id="metric-aqi-pill" title="Air Quality Index">
+                <i class="fa-solid fa-leaf text-success" id="metric-aqi-icon"></i>
+                <div class="metric-info">
+                  <span class="metric-label">Air Quality</span>
+                  <span class="metric-value" id="metric-aqi">AQI 32 (Good)</span>
+                </div>
+              </div>
+              <div class="metric-pill" title="UV Index">
+                <i class="fa-solid fa-sun text-amber"></i>
+                <div class="metric-info">
+                  <span class="metric-label">UV Index</span>
+                  <span class="metric-value" id="metric-uv">5 (Mod)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horizontal 5-Day Forecast Outlook -->
+          <div class="forecast-outlook-container">
+            <div class="forecast-outlook-header">
+              <h4><i class="fa-solid fa-calendar-week text-amber"></i> 5-Day Outlook</h4>
+              <span class="forecast-outlook-sub">Includes precipitation %, wind, humidity &amp; air quality</span>
+            </div>
+            <div class="forecast-days-grid" id="forecast-grid-container">
+              <!-- 5-Day Forecast items injected via JS (Horizontal 5-column layout) -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3b. WINDY.COM LIVE RADAR MODAL -->
+    <div class="modal-overlay" id="windy-radar-modal" role="dialog" aria-modal="true" aria-labelledby="windy-radar-title">
+      <div class="modal-card glass-panel windy-modal-card">
+        <div class="modal-header">
+          <div class="windy-header-left">
+            <h3 id="windy-radar-title"><i class="fa-solid fa-satellite-dish text-sky"></i> Live Weather Radar</h3>
+            <span class="windy-powered-by">Powered by <a href="https://www.windy.com" target="_blank" rel="noopener noreferrer">Windy.com</a></span>
+          </div>
+          <div class="windy-modal-controls">
+            <div class="radar-layer-toggles" role="group" aria-label="Radar Map Layers">
+              <button type="button" class="layer-toggle-btn active" data-layer="radar"><i class="fa-solid fa-cloud-rain"></i> Radar</button>
+              <button type="button" class="layer-toggle-btn" data-layer="wind"><i class="fa-solid fa-wind"></i> Wind</button>
+              <button type="button" class="layer-toggle-btn" data-layer="rain"><i class="fa-solid fa-droplet"></i> Rain</button>
+              <button type="button" class="layer-toggle-btn" data-layer="temp"><i class="fa-solid fa-temperature-half"></i> Temp</button>
+              <button type="button" class="layer-toggle-btn" data-layer="clouds"><i class="fa-solid fa-cloud"></i> Clouds</button>
+            </div>
+            <a href="https://www.windy.com" target="_blank" rel="noopener noreferrer" class="btn-icon" id="windy-external-link" title="Open full screen on Windy.com" aria-label="Open full screen on Windy.com">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <button class="modal-close-btn" id="windy-radar-modal-close" aria-label="Close dialog">&times;</button>
+          </div>
+        </div>
+        <div class="modal-body windy-modal-body">
+          <div class="windy-iframe-container">
+            <div class="windy-loading-spinner" id="windy-spinner">
+              <i class="fa-solid fa-circle-notch fa-spin text-sky"></i>
+              <span>Loading live radar map...</span>
+            </div>
+            <iframe
+              id="windy-iframe"
+              title="Windy.com Interactive Radar"
+              data-src-base="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=in&metricTemp=%C2%B0F&metricWind=mph&zoom=8&level=surface"
+              frameborder="0"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. DASHBOARD SETTINGS & INTEGRATIONS MODAL -->
+    <div class="modal-overlay" id="settings-modal">
+      <div class="modal-card glass-panel settings-modal-card">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-gear"></i> Dashboard Settings</h3>
+          <button class="modal-close-btn" id="settings-modal-close" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <!-- Settings Tabs Navigation -->
+        <div class="settings-tabs-row" role="tablist" aria-label="Settings categories">
+          <button class="settings-tab active" role="tab" id="settings-tab-btn-calendar" data-settings-tab="calendar" aria-selected="true" aria-controls="settings-tab-calendar" tabindex="0">
+            <i class="fa-solid fa-calendar-days"></i> Calendar
+          </button>
+          <button class="settings-tab" role="tab" id="settings-tab-btn-todos" data-settings-tab="todos" aria-selected="false" aria-controls="settings-tab-todos" tabindex="-1">
+            <i class="fa-solid fa-list-check"></i> Todos
+          </button>
+          <button class="settings-tab" role="tab" id="settings-tab-btn-meals" data-settings-tab="meals" aria-selected="false" aria-controls="settings-tab-meals" tabindex="-1">
+            <i class="fa-solid fa-utensils"></i> Meals
+          </button>
+          <button class="settings-tab" role="tab" id="settings-tab-btn-general" data-settings-tab="general" aria-selected="false" aria-controls="settings-tab-general" tabindex="-1">
+            <i class="fa-solid fa-sliders"></i> General
+          </button>
+        </div>
+
+        <div class="modal-body settings-body">
+
+          <!-- 1. CALENDAR TAB PANEL -->
+          <div class="settings-tab-panel active" id="settings-tab-calendar" role="tabpanel" aria-labelledby="settings-tab-btn-calendar">
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-calendar-days text-amber"></i> Home Assistant Calendar Entities</h4>
+              <p class="section-desc">Map each family member to their Home Assistant calendar entity (e.g. <code>calendar.personal_gmail_com</code>, <code>calendar.family</code>).</p>
+              
+              <div id="ha-calendar-entities-container">
+                <!-- Injected via JS -->
+              </div>
+              <datalist id="ha-calendars-datalist"></datalist>
+              
+              <button class="btn-secondary" id="sync-ha-calendars-btn" style="margin-top: 8px;">
+                <i class="fa-solid fa-arrows-rotate"></i> Sync Home Assistant Calendars Now
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. TODOS TAB PANEL -->
+          <div class="settings-tab-panel" id="settings-tab-todos" role="tabpanel" aria-labelledby="settings-tab-btn-todos" hidden>
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-list-check text-amber"></i> Shopping List Entity</h4>
+              <p class="section-desc">Connect a Home Assistant to-do entity synced via Google Keep sync.</p>
+              <div class="form-group">
+                <label for="grocery-entity-input">HA Grocery Todo Entity <span style="font-size:0.75rem;color:var(--text-muted)">(from google_keep_sync)</span></label>
+                <input type="text" id="grocery-entity-input" placeholder="todo.google_keep_shopping_list" />
+              </div>
+              <div class="form-group">
+                <label for="keep-url-input">Google Keep Web URL</label>
+                <input type="text" id="keep-url-input" placeholder="https://keep.google.com" />
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-star text-amber"></i> Family Star Targets & Rewards</h4>
+              <p class="section-desc">Set target stars and goals for kid chore charts.</p>
+              <div class="member-settings-list" id="member-settings-container">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. MEALS TAB PANEL -->
+          <div class="settings-tab-panel" id="settings-tab-meals" role="tabpanel" aria-labelledby="settings-tab-btn-meals" hidden>
+            <!-- Meal Ideas Management (Add, Remove, Modify) -->
+            <div class="settings-section">
+              <div class="section-header-row" style="display:flex;justify-content:space-between;align-items:center;">
+                <h4><i class="fa-solid fa-utensils text-amber"></i> Meal Ideas Library</h4>
+                <span class="meal-ideas-count-badge" id="meal-ideas-count-badge">0 ideas</span>
+              </div>
+              <p class="section-desc">Manage dinner ideas for your weekly meal planner. Add new favorites, edit names, or remove old ideas.</p>
+              
+              <div class="meal-ideas-add-bar">
+                <input type="text" id="new-meal-idea-input" placeholder="Add a new meal idea (e.g. Chicken Tikka Masala)..." aria-label="New meal idea" />
+                <button type="button" class="btn-primary" id="add-meal-idea-btn"><i class="fa-solid fa-plus"></i> Add Idea</button>
+              </div>
+
+              <div class="meal-ideas-filter-bar">
+                <input type="search" id="filter-meal-ideas-input" placeholder="Search meal ideas..." aria-label="Filter meal ideas" />
+              </div>
+
+              <ul class="settings-meal-ideas-list" id="settings-meal-ideas-list" role="list">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+
+            <!-- Home Assistant Meal Entities -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-cloud-arrow-down text-sky"></i> Home Assistant Meal Sync</h4>
+              <p class="section-desc">Optional Home Assistant To-do entities to sync meal ideas and the weekly plan across devices.</p>
+              <div class="form-group">
+                <label for="meal-ideas-entity-input">HA Meal Ideas Entity <span style="font-size:0.75rem;color:var(--text-muted)">(Helper → To-do list → "Meal Ideas")</span></label>
+                <input type="text" id="meal-ideas-entity-input" placeholder="todo.meal_ideas" />
+              </div>
+              <div class="form-group">
+                <label for="meal-plan-entity-input">HA Weekly Meal Plan Entity <span style="font-size:0.75rem;color:var(--text-muted)">(Helper → To-do list → "Weekly Meal Plan")</span></label>
+                <input type="text" id="meal-plan-entity-input" placeholder="todo.weekly_meal_plan" />
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. GENERAL TAB PANEL -->
+          <div class="settings-tab-panel" id="settings-tab-general" role="tabpanel" aria-labelledby="settings-tab-btn-general" hidden>
+            <!-- Appearance Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-palette text-sky"></i> Appearance</h4>
+              <div class="form-group">
+                <label id="theme-label">Color Theme</label>
+                <div class="theme-mode-group" id="theme-mode-group" role="group" aria-labelledby="theme-label">
+                  <button class="theme-mode-btn" data-mode="light"><i class="fa-solid fa-sun"></i> Light</button>
+                  <button class="theme-mode-btn" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i> Auto</button>
+                  <button class="theme-mode-btn" data-mode="dark"><i class="fa-solid fa-moon"></i> Dark</button>
+                </div>
+                <p class="section-desc" id="auto-theme-desc">Auto mode switches at sunrise &amp; sunset using Home Assistant's sun sensor.</p>
+              </div>
+            </div>
+
+            <!-- Home Assistant Section -->
+            <div class="settings-section" id="ha-section">
+              <h4><i class="fa-solid fa-house-signal text-sky"></i> Home Assistant Integration</h4>
+              <p class="section-desc">Calendars, lists, weather location and photos come from Home Assistant.</p>
+              <p class="section-desc" id="ha-embedded-note" hidden><i class="fa-solid fa-circle-check"></i> Connected through your Home Assistant login. No URL or access token is needed.</p>
+
+              <div id="ha-credentials">
+              <p class="section-desc">Only needed when this dashboard runs <strong>outside</strong> Home Assistant (a standalone kiosk or browser tab). Optional when installed through HACS.</p>
+              <div class="form-group">
+                <label for="ha-url-input">Home Assistant URL</label>
+                <input type="text" id="ha-url-input" value="http://homeassistant.local:8123" placeholder="http://homeassistant.local:8123" />
+              </div>
+
+              <div class="form-group">
+                <label for="ha-token-input">Long-Lived Access Token (LLAT)</label>
+                <input type="password" id="ha-token-input" placeholder="Paste HA Access Token here..." />
+              </div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <button class="btn-secondary" id="ha-test-btn"><i class="fa-solid fa-plug"></i> Test Connection</button>
+                <span class="ha-status-badge" id="ha-status-badge" role="status">Not tested</span>
+              </div>
+
+              <div class="form-group checkbox-form-group" style="margin-top:16px; padding:12px 14px; background:var(--bg-canvas-subtle, rgba(0,0,0,0.03)); border:1px solid var(--border-subtle, rgba(0,0,0,0.08)); border-radius:var(--radius-md, 8px);">
+                <label for="ha-kiosk-mode-toggle" style="display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:600; margin:0;">
+                  <input type="checkbox" id="ha-kiosk-mode-toggle" style="width:18px; height:18px; cursor:pointer; accent-color:var(--color-primary, #38bdf8);" />
+                  <span>Kiosk Mode (hide Home Assistant header and sidebar)</span>
+                </label>
+                <p class="section-desc" style="margin:4px 0 0 28px; font-size:0.8rem;">Hides Home Assistant's top titlebar and navigation sidebar on this device for a clean, full-screen wall tablet experience. Needs the <a href="https://github.com/j-a-n/lovelace-wallpanel" target="_blank" rel="noopener noreferrer">WallPanel integration</a> (install it from HACS or download it from GitHub). Changing this reloads the page.</p>
+              </div>
+            </div>
+
+            <!-- Immich Photo Screensaver Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-photo-film text-rose"></i> Photo Screensaver</h4>
+              <p class="section-desc">Photos come from a Home Assistant image entity, such as the Immich integration's random favorite image.</p>
+
+              <div class="form-group">
+                <label for="photo-entity-input">Image Entity</label>
+                <input type="text" id="photo-entity-input" placeholder="image.immich_random_favorite_image" value="image.immich_random_favorite_image" />
+              </div>
+
+              <div class="form-group" style="display:flex;gap:12px;">
+                <div style="flex:1">
+                  <label for="photo-interval-input">Photo Interval (seconds)</label>
+                  <input type="number" id="photo-interval-input" min="10" max="300" placeholder="30" value="30" style="width:100%" />
+                </div>
+                <div style="flex:1">
+                  <label for="idle-minutes-input">Idle Timeout (minutes)</label>
+                  <input type="number" id="idle-minutes-input" min="1" max="60" placeholder="2" value="2" style="width:100%" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Night Mode Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-moon text-sky"></i> Night Mode</h4>
+              <p class="section-desc">Dims the screen at night. A tap brightens it again until the idle timeout passes.</p>
+              <div class="form-group">
+                <label for="night-mode-select">When</label>
+                <select id="night-mode-select">
+                  <option value="off">Off</option>
+                  <option value="schedule">At set times</option>
+                  <option value="sun">Sunset to sunrise</option>
+                </select>
+              </div>
+              <div class="form-group" id="night-times" style="display:flex;gap:12px;" hidden>
+                <div style="flex:1">
+                  <label for="night-start-input">Start</label>
+                  <input type="time" id="night-start-input" value="21:00" style="width:100%" />
+                </div>
+                <div style="flex:1">
+                  <label for="night-stop-input">Stop</label>
+                  <input type="time" id="night-stop-input" value="07:00" style="width:100%" />
+                </div>
+              </div>
+              <div class="form-group" id="night-brightness-group" hidden>
+                <label for="night-brightness-input">Brightness: <span id="night-brightness-value">15%</span></label>
+                <input type="range" id="night-brightness-input" min="5" max="80" step="5" value="15" style="width:100%" />
+              </div>
+            </div>
+
+            <!-- Doorbell Camera Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-bell text-amber"></i> Doorbell Camera</h4>
+              <p class="section-desc">Show a live camera feed when someone rings. Leave blank to disable.</p>
+              <div class="form-group">
+                <label for="doorbell-entity-input">Doorbell Press Entity <span style="font-size:0.75rem;color:var(--text-muted)">(event.* or binary_sensor.*)</span></label>
+                <input type="text" id="doorbell-entity-input" placeholder="binary_sensor.front_door_visitor" />
+              </div>
+              <div class="form-group" style="display:flex;gap:12px;">
+                <div style="flex:2">
+                  <label for="doorbell-camera-input">Camera Entity</label>
+                  <input type="text" id="doorbell-camera-input" placeholder="camera.front_door" style="width:100%" />
+                </div>
+                <div style="flex:1">
+                  <label for="doorbell-seconds-input">Show (seconds)</label>
+                  <input type="number" id="doorbell-seconds-input" min="5" max="300" placeholder="30" value="30" style="width:100%" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Weather & Radar Location Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-cloud-sun text-amber"></i> Weather &amp; Radar Location</h4>
+              <p class="section-desc">Coordinates used for live weather forecast, air quality (AQI), and Windy.com radar.</p>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="weather-lat-input">Latitude</label>
+                  <input type="text" id="weather-lat-input" placeholder="e.g. 37.7749" />
+                </div>
+                <div class="form-group">
+                  <label for="weather-lon-input">Longitude</label>
+                  <input type="text" id="weather-lon-input" placeholder="e.g. -122.4194" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="weather-location-name-input">Location Display Name</label>
+                <input type="text" id="weather-location-name-input" placeholder="e.g. Home, San Francisco, etc." />
+              </div>
+
+              <div style="display:flex; align-items:center; gap:12px; margin-top:4px;">
+                <button type="button" class="btn-secondary" id="weather-detect-location-btn">
+                  <i class="fa-solid fa-location-crosshairs"></i> Auto-Detect Location
+                </button>
+                <span id="weather-detect-status" style="font-size:0.8rem; color:var(--text-muted);"></span>
+              </div>
+            </div>
+
+            <!-- Data Management & Backup Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-database text-sky"></i> Data &amp; Backup</h4>
+              <p class="section-desc">Export all your family data (chores, routines, star points, meals, reminders, and settings) as a standalone JSON backup file, or restore from a previously exported backup.</p>
+              
+              <div class="data-backup-actions">
+                <button type="button" class="btn-secondary" id="export-data-btn">
+                  <i class="fa-solid fa-download"></i> Export Data Backup (JSON)
+                </button>
+                <button type="button" class="btn-secondary" id="import-data-btn">
+                  <i class="fa-solid fa-upload"></i> Import Data Backup (JSON)
+                </button>
+                <input type="file" id="import-data-file-input" accept=".json,application/json" style="display:none;" />
+              </div>
+              <p class="section-desc" style="font-size:0.8rem; margin-top:4px; color:var(--text-muted);">
+                <i class="fa-solid fa-circle-info"></i> Tip: Replace <code>data/dashboard-data.json</code> with an exported file to update the default baseline across all household tablets.
+              </p>
+            </div>
+
+            <!-- Reset Section -->
+            <div class="settings-section">
+              <h4><i class="fa-solid fa-rotate-left text-danger"></i> Reset Data to Baseline</h4>
+              <p class="section-desc">Clear local browser storage and reload baseline data from <code>data/dashboard-data.json</code>.</p>
+              <button class="btn-danger" id="reset-data-btn"><i class="fa-solid fa-trash-arrow-up"></i> Reset All Data to Baseline</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="settings-modal-cancel">Cancel</button>
+          <button type="button" class="btn-primary" id="save-settings-btn">Save Settings & Sync</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. AMBIENT PHOTO FRAME SAVER OVERLAY -->
+    <div class="night-dim" id="night-dim" aria-hidden="true"></div>
+
+    <div class="doorbell-overlay" id="doorbell-overlay" role="dialog" aria-label="Doorbell camera">
+      <img id="doorbell-img" alt="Front door camera" />
+      <div class="doorbell-hint"><i class="fa-solid fa-bell"></i> Someone's at the door — tap to dismiss</div>
+    </div>
+    <div class="photo-frame-overlay" id="photo-frame-overlay">
+      <div class="photo-slide" id="photo-slide-bg"></div>
+      <div class="photo-caption" id="photo-caption">Family photo</div>
+      <div class="photo-frame-info">
+        <div class="photo-events" id="photo-events" hidden></div>
+        <div class="photo-time" id="photo-time">12:00 PM</div>
+        <div class="photo-date" id="photo-date">Tuesday, September 8</div>
+        <div class="photo-weather" id="photo-weather" hidden>
+          <i class="fa-solid fa-sun" id="photo-weather-icon" aria-hidden="true"></i>
+          <span id="photo-weather-temp">--°</span>
+          <span class="photo-weather-aqi">AQI <span id="photo-weather-aqi">--</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. EVENT DETAILS POPOVER -->
+    <div class="event-details-popover glass-panel" id="event-details-popover">
+      <div class="popover-header">
+        <div class="popover-member-tag" id="popover-member-tag">
+          <span class="popover-avatar" id="popover-avatar">👩</span>
+          <span class="popover-member-name" id="popover-member-name">Mom</span>
+        </div>
+        <button class="popover-close-btn" id="popover-close-btn" title="Close" aria-label="Close dialog"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <h3 class="popover-title" id="popover-title">Event Title</h3>
+      <div class="popover-meta-group">
+        <div class="popover-meta-row" id="popover-time-row">
+          <i class="fa-regular fa-clock text-sky"></i>
+          <span id="popover-time-text">Thursday, Sep 10 • 6:00 PM - 7:00 PM</span>
+        </div>
+        <div class="popover-meta-row" id="popover-location-row">
+          <i class="fa-solid fa-location-dot text-rose"></i>
+          <span id="popover-location-text">Location</span>
+        </div>
+        <div class="popover-meta-row" id="popover-notes-row">
+          <i class="fa-regular fa-file-lines text-amber"></i>
+          <span id="popover-notes-text">Description</span>
+        </div>
+      </div>
+      <div class="popover-footer">
+        <button class="btn-secondary btn-sm" id="popover-edit-btn"><i class="fa-solid fa-pen"></i> Edit</button>
+        <button class="btn-danger-outline btn-sm" id="popover-delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+      </div>
+    </div>
+
+    <!-- 7. ADMIN PIN MODAL -->
+    <div class="modal-overlay" id="admin-pin-modal">
+      <div class="modal-card glass-panel" style="max-width:340px;">
+        <div class="modal-header">
+          <h3 id="admin-pin-title"><i class="fa-solid fa-key text-sky"></i> Parent Verification</h3>
+        </div>
+        <div class="modal-body">
+          <p id="admin-pin-desc" style="text-align:center; color:var(--text-secondary); margin-bottom:20px;">Enter your 4-digit parent PIN to continue.</p>
+          <div class="pin-input-row">
+            <input type="password" class="pin-digit" readonly tabindex="-1" aria-label="PIN digit 1" />
+            <input type="password" class="pin-digit" readonly tabindex="-1" aria-label="PIN digit 2" />
+            <input type="password" class="pin-digit" readonly tabindex="-1" aria-label="PIN digit 3" />
+            <input type="password" class="pin-digit" readonly tabindex="-1" aria-label="PIN digit 4" />
+          </div>
+          <div id="pin-error" class="pin-error-msg" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i> <span id="pin-error-text">Incorrect PIN — try again.</span>
+          </div>
+          <div class="pin-keypad" id="pin-keypad">
+            <button type="button" class="pin-key" data-key="1">1</button><button type="button" class="pin-key" data-key="2">2</button><button type="button" class="pin-key" data-key="3">3</button><button type="button" class="pin-key" data-key="4">4</button><button type="button" class="pin-key" data-key="5">5</button><button type="button" class="pin-key" data-key="6">6</button><button type="button" class="pin-key" data-key="7">7</button><button type="button" class="pin-key" data-key="8">8</button><button type="button" class="pin-key" data-key="9">9</button>
+            <button type="button" class="pin-key pin-key--cancel" id="admin-pin-cancel">Cancel</button>
+            <button type="button" class="pin-key" data-key="0">0</button>
+            <button type="button" class="pin-key pin-key--back" data-key="back" aria-label="Delete"><i class="fa-solid fa-delete-left" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. ADMIN PANEL MODAL -->
+    <div class="modal-overlay" id="admin-panel-modal">
+      <div class="modal-card glass-panel admin-modal-card">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-screwdriver-wrench text-sky"></i> Chore Admin</h3>
+          <button class="modal-close-btn" id="admin-panel-close" aria-label="Close dialog">&times;</button>
+        </div>
+        <div class="admin-tabs-row">
+          <button class="admin-tab active" data-admin-tab="chores"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Daily chores</button>
+          <button class="admin-tab" data-admin-tab="wildcards"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Wildcards</button>
+          <button class="admin-tab" data-admin-tab="stars"><i class="fa-solid fa-star" aria-hidden="true"></i> Stars</button>
+          <button class="admin-tab" data-admin-tab="pin"><i class="fa-solid fa-key" aria-hidden="true"></i> PIN</button>
+        </div>
+        <div class="admin-body" id="admin-body">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+        <!-- GOAL COMPLETED BANNER -->
+    <div class="modal-overlay" id="goal-banner">
+      <div class="modal-card glass-panel goal-banner-card">
+        <i class="fa-solid fa-trophy goal-banner-icon" aria-hidden="true"></i>
+        <h3 id="goal-banner-title">Prize bought!</h3>
+        <p class="goal-banner-name" id="goal-banner-name"></p>
+        <p class="card-meta" id="goal-banner-sub"></p>
+        <div class="goal-banner-actions">
+          <button type="button" class="btn-secondary" id="goal-banner-close">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIZE STORE -->
+    <div class="modal-overlay" id="store-modal">
+      <div class="modal-card glass-panel">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-gift text-amber"></i> Prize store</h3>
+          <button class="modal-close-btn" id="store-modal-close" aria-label="Close dialog">&times;</button>
+        </div>
+        <div class="modal-body" id="store-body"></div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
+
+  </div>
+
+  <!-- Application Configuration & Standalone Script -->
+  <script src="config.js?v=14"></script>
+  <script src="js/bundle.js?v=105"></script>
+</body>
+</html>

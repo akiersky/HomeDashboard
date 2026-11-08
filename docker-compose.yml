@@ -1,0 +1,14 @@
+# Family Dashboard without Home Assistant. Start it with: docker compose up -d --build
+# Then open http://<this-machine>:8080. Settings live in ./docker-data (see server/server.example.json).
+services:
+  dashboard:
+    build: .   # or skip building: image: ghcr.io/akiersky/homedashboard:latest
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: America/Chicago   # your timezone: used for calendar events that carry no timezone
+      # PASSWORD: change-me # uncomment to ask for a password (any user name) before showing anything
+    volumes:
+      - ./docker-data:/data # shared household data, server.json, optional config.js
+      # - /path/to/photos:/photos:ro   # a folder of pictures for the screensaver (path: /photos in server.json)
+    restart: unless-stopped

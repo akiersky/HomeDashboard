@@ -1,0 +1,11 @@
+.git
+.claude
+graphify-out
+docs
+family-dashboard-docs
+tests
+scripts
+src
+config.js
+docker-data
+**/node_modules

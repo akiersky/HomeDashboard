@@ -1,0 +1,12 @@
+.claude/
+config.js
+*.log
+.DS_Store
+graphify-out/
+.impeccable/
+*.local.json
+data/*.local.json
+*.local
+.env
+server/node_modules/
+docker-data/

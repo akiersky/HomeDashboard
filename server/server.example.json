@@ -1,0 +1,13 @@
+{
+  "calendars": {
+    "calendar.mom": "https://calendar.google.com/calendar/ical/.../private-.../basic.ics",
+    "calendar.family": "webcal://example.com/family.ics"
+  },
+  "photos": {
+    "image.photos": { "type": "theme", "theme": "nature" }
+  },
+  "cameras": {
+    "camera.front_door": "http://go2rtc:1984/api/stream.mjpeg?src=front_door"
+  },
+  "location": { "latitude": 40.7128, "longitude": -74.006, "name": "Home" }
+}
